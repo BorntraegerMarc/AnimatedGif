@@ -4,14 +4,37 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.WebView;
 
+import java.io.IOException;
+import java.io.InputStream;
 
 public class AnimationActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_animation);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        InputStream stream = null;
+        try {
+            stream = getAssets().open("piggy.gif");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Falls eine andere View gebraucht werden soll, muss diese hier auskommentiert werden.
+        //  GifMovieView view = new GifMovieView(this, stream);
+        //  GifDecoderView view = new GifDecoderView(this, stream);
+
+        WebView webView = (WebView) findViewById(R.id.gifWebView);
+        webView.loadUrl("file:///android_asset/piggy.gif");
     }
 
 
