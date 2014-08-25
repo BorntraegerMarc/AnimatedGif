@@ -1,11 +1,17 @@
 package com.borntsch.animatedgif;
 
 import android.app.Activity;
+import android.content.Context;
+import android.graphics.Movie;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebView;
+import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -55,5 +61,37 @@ public class AnimationActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     *
+     * @param view
+     */
+    public void convertGif(View view) {
+        long mMoviestart=0;
+        InputStream stream = null;
+        try {
+            stream = getAssets().open("piggy.gif");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Movie movie = Movie.decodeStream(stream);
+
+        String filename = "myfile";
+        String string = "Hello world!";
+        FileOutputStream outputStream;
+
+
+        try {
+            outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
+            outputStream.write(string.getBytes());
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
     }
 }
